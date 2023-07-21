@@ -1,0 +1,22 @@
+name: nodeUpgrade
+description: |
+  node version upgrade to 2.0.0
+
+# Find all repositories that contain the `fmt.Sprintf` statement using structural search
+on:
+  - repositoriesMatchingQuery: file:package.json version patterntype:regex
+
+steps:
+  # Run Comby (https://comby.dev) to replace the Go statements...
+  - run: |
+      comby -in-place '"version"::[2]' '"version": "2.0.0",' package.json
+    container: comby/comby
+
+
+# Describe the changeset (e.g., GitHub pull request) you want for each repository.
+changesetTemplate:
+  title: Upgrade all repos node version to 2.0.0
+  body: Upgrade all repos node version to 2.0.0
+  branch: batches/versionUpgrade
+  commit:
+    message: Upgrade all repos node version to 2.0.0

@@ -1,0 +1,22 @@
+name: newDemo
+description: |
+  version upgrade ejs to 3.4.0
+
+# Find all repositories that contain the `fmt.Sprintf` statement using structural search
+on:
+  - repositoriesMatchingQuery: file:package.json ejs patterntype:regex
+
+steps:
+  # Run Comby (https://comby.dev) to replace the Go statements...
+  - run: |
+      comby -in-place '"ejs"::[2]' '"ejs": "3.4.0",' package.json
+    container: comby/comby
+
+
+# Describe the changeset (e.g., GitHub pull request) you want for each repository.
+changesetTemplate:
+  title: Upgrade all repos lib1 version to 3.4.0
+  body: Upgrade all repos lib1 version to 3.4.0
+  branch: batches/versionUpgrade
+  commit:
+    message: Upgrade all repos lib1 version to 3.4.0
